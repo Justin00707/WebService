@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const API_URL = 'http://your-api-url.com/api';
+    const API_URL = 'https://github.com/Justin00707/WebService';
     let jwtToken = '';
 
     // Example Login Function

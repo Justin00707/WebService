@@ -4,6 +4,7 @@ const sequelize = require('../config/database'); // Adjust the path as needed
 class Author extends Model {}
 
 Author.init({
+  // Model attributes are defined here
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -15,11 +16,14 @@ Author.init({
   },
   biographie: {
     type: DataTypes.TEXT,
-    allowNull: true // Can be null according to your SQL design
+    allowNull: true
   }
 }, {
+  // Sequelize instance and other model options are defined here
   sequelize,
-  modelName: 'Author', // The name of the table
+  modelName: 'Author',
+  tableName: 'authors', // Optional: explicitly specify the table name if different
+  timestamps: false    // Optional: set true if you want Sequelize to handle createdAt & updatedAt
 });
 
 module.exports = Author;
