@@ -1,0 +1,12 @@
+{
+    "books": [
+      {
+        "id": 1,
+        "titre": "Mystères Cosmiques",
+        "auteurId": 123,
+        "annee": 2023,
+        "genre": "Science-Fiction"
+      }
+    ]
+  }
+  
