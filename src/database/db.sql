@@ -6,9 +6,6 @@ CREATE TABLE Auteurs (
   biographie TEXT
 );
 
-ALTER TABLE Livres
-ADD COLUMN createdAt DATETIME,
-ADD COLUMN updatedAt DATETIME;
 
 CREATE TABLE Livres (
   id INT AUTO_INCREMENT PRIMARY KEY,
