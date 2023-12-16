@@ -1,39 +1,65 @@
 body, html {
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    color: #333;
 }
 
 #app {
     width: 80%;
     margin: auto;
     padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 input, button, textarea {
     margin: 10px 0;
-    padding: 8px;
+    padding: 12px;
     display: block;
     width: 95%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
 button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     border: none;
     color: white;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-#bookSection, #authorSection {
-    margin-top: 20px;
+.section-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.section-header {
+    font-size: 20px;
+    color: #333333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .item {
@@ -41,7 +67,8 @@ button:hover {
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 10px;
-    list-style-type: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Modal styles */
@@ -58,6 +85,8 @@ button:hover {
 }
 
 .modal-content, .confirm-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -81,8 +110,13 @@ button:hover {
 
 /* Responsive design for smaller screens */
 @media screen and (max-width: 600px) {
+    #app {
+        width: 95%;
+        padding: 10px;
+    }
+
     .modal-content, .confirm-content {
-        width: 90%;
+        width: 95%;
         margin: 10% auto;
     }
 }

@@ -26,6 +26,5 @@ describe('POST /api/books', () => {
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toHaveProperty('id');
-    // Add additional assertions as needed
   });
 });

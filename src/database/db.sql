@@ -1,32 +1,31 @@
 USE b00zxs2ee3avwueqlute;
 
--- Create the Auteurs table
 CREATE TABLE Auteurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    biographie TEXT,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(255) NOT NULL,
+  biographie TEXT
 );
 
--- Create the Livres table
+ALTER TABLE Livres
+ADD COLUMN createdAt DATETIME,
+ADD COLUMN updatedAt DATETIME;
+
 CREATE TABLE Livres (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titre VARCHAR(255) NOT NULL,
-    auteurId INT,
-    annee YEAR,
-    genre VARCHAR(100),
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (auteurId) REFERENCES Auteurs(id)
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titre VARCHAR(255) NOT NULL,
+  auteurId INT,
+  annee YEAR,
+  genre VARCHAR(100),
+  createdAt DATETIME,
+  updatedAt DATETIME,
+  FOREIGN KEY (auteurId) REFERENCES Auteurs(id)
 );
 
--- Create the Utilisateurs table
 CREATE TABLE Utilisateurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    motDePasse VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'utilisateur') NOT NULL DEFAULT 'utilisateur',
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  motDePasse VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'utilisateur') NOT NULL
 );
+
+

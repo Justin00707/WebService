@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app'); // Adjust the path according to your project structure
+const app = require('../app'); 
 
 describe('GET /api/authors', () => {
     it('retrieves a list of authors', async () => {
@@ -7,7 +7,7 @@ describe('GET /api/authors', () => {
   
       expect(response.statusCode).toBe(200);
       expect(response.body).toBeInstanceOf(Array);
-      // Add additional assertions as needed
+
     });
   });
 
@@ -25,7 +25,7 @@ describe('GET /api/authors', () => {
   
       expect(response.statusCode).toBe(201);
       expect(response.body).toHaveProperty('id');
-      // Add additional assertions as needed
+
     });
   });
   

@@ -8,22 +8,21 @@
 </head>
 <body>
     <div id="app">
-        <!-- Authentication Section -->
+        <!-- Section Authentification -->
         <section id="auth">
             <form id="loginForm">
                 <input type="email" id="loginEmail" placeholder="Email" required>
                 <input type="password" id="loginPassword" placeholder="Mot de passe" required>
-                <button type="submit">Connexion</button>
-            </form>
-            <button id="registerBtn">Inscription</button>
+                <button type="submit" id="loginButton">Connexion</button>
+                <button id="registerBtn">Inscription</button>
+            </form>            
         </section>
 
-        <!-- Registration Model -->
+        <!-- Registration Modal -->
         <div id="registrationModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <form id="registrationForm">
-                    <input type="text" id="registrationName" placeholder="Nom" required>
                     <input type="email" id="registrationEmail" placeholder="Email" required>
                     <input type="password" id="registrationPassword" placeholder="Mot de passe" required>
                     <input type="password" id="registrationConfirmPassword" placeholder="Confirmer mot de passe" required>
@@ -60,17 +59,23 @@
             </div>
         </div>
 
-        <!-- CRUD Operations for Books -->
-        <section id="bookSection">
-            <button id="addBookBtn">+ Livre</button>
-            <div id="books"></div>
-        </section>
+        <!-- Section Livres -->
+        <div id="bookSection" class="section-container" style="display: none;">
+            <div class="section-header">Livres</div>
+            <button id="addBookBtn">+ Ajouter un Livre</button>
+            <div id="books">
+                <!-- Les livres seront affichés ici -->
+            </div>
+        </div>
 
-        <!-- CRUD Operations for Authors -->
-        <section id="authorSection">
-            <button id="addAuthorBtn">+ Auteur</button>
-            <div id="authors"></div>
-        </section>
+        <!-- Section Auteurs -->
+        <div id="authorSection" class="section-container" style="display: none;">
+            <div class="section-header">Auteurs</div>
+            <button id="addAuthorBtn">+ Ajouter un Auteur</button>
+            <div id="authors">
+                <!-- Les auteurs seront affichés ici -->
+            </div>
+        </div>
 
         <!-- Confirmation Modal -->
         <div id="confirmModal" class="confirm-modal">

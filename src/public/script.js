@@ -3,18 +3,17 @@ let books = [
     { id: 2, title: 'L’Étranger', author: 'Albert Camus', year: 1942, genre: 'Philosophie' }
 ];
 
-
 let authors = [
     { id: 1, name: 'Antoine de Saint-Exupéry', biography: 'Un écrivain et aviateur français' },
     { id: 2, name: 'Albert Camus', biography: 'Un philosophe, écrivain et journaliste français' }
 ];
 
-document.addEventListener('DOMContentLoaded', function() {
-    setupModalToggles();
-    setupFormSubmissions();
-    displayBooks();
-    displayAuthors();
-});
+let users = [
+    { email: 'admin@admin.com', password: 'admin' }
+];
+
+
+let isLoggedIn = false;
 
 function setupModalToggles() {
     document.getElementById('registerBtn').addEventListener('click', function() {
@@ -34,24 +33,137 @@ function setupModalToggles() {
     };
 
     document.getElementById('addBookBtn').addEventListener('click', function() {
-        openBookModal(null);
+        if (isLoggedIn) openBookModal(null);
     });
 
     document.getElementById('addAuthorBtn').addEventListener('click', function() {
-        openAuthorModal(null);
+        if (isLoggedIn) openAuthorModal(null);
     });
 }
 
 function setupFormSubmissions() {
     document.getElementById('registrationForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        closeModal('registrationModal');
+        closeModal('registrationModal');    
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        handleRegistration();
     });
 
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        handleLogin();
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (!isLoggedIn) handleLogin();
     });
 }
+
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    if (email === 'admin@admin.com' && password === 'admin') {
+        isLoggedIn = true;
+        showAuthenticatedContent();
+        updateLoginButton();
+        // Hide form elements except the button
+        document.getElementById('loginEmail').style.display = 'none';
+        document.getElementById('loginPassword').style.display = 'none';
+        document.getElementById('registerBtn').style.display = 'none';
+    } else {
+        alert("Informations de connexion incorrectes");
+    }
+}
+
+function hideLoginForm() {
+    document.getElementById('loginForm').style.display = 'none';
+}
+
+function showLoginForm() {
+    document.getElementById('loginForm').style.display = 'block';
+}
+
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function handleLogout() {
+    isLoggedIn = false;
+    updateLoginButton();
+    hideAuthenticatedContent();
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+}
+
+function updateLoginButton() {
+    const loginButton = document.getElementById('loginButton');
+
+    if (isLoggedIn) {
+        loginButton.textContent = 'Déconnexion';
+        loginButton.removeEventListener('click', handleLogin);
+        loginButton.addEventListener('click', handleLogout);
+    } else {
+        loginButton.textContent = 'Connexion';
+        document.getElementById('loginEmail').style.display = 'block';
+        document.getElementById('loginPassword').style.display = 'block';
+        document.getElementById('registerBtn').style.display = 'block';
+        loginButton.removeEventListener('click', handleLogout);
+        loginButton.addEventListener('click', handleLogin);
+    }
+}
+
+function handleRegistration() {
+    const email = document.getElementById('registrationEmail').value;
+    const password = document.getElementById('registrationPassword').value;
+    const confirmPassword = document.getElementById('registrationConfirmPassword').value;
+    
+    // Vérifier si les mots de passe correspondent
+    if (password !== confirmPassword) {
+        alert("Les mots de passe ne correspondent pas.");
+        return;
+    }
+
+    // Vérifier si l'utilisateur existe déjà
+    const userExists = users.some(user => user.email === email);
+    if (userExists) {
+        alert("Un utilisateur avec cet email existe déjà.");
+        return;
+    }
+
+    // Ajouter le nouvel utilisateur
+    users.push({ email: email, password: password });
+    alert("Inscription réussie!");
+
+    closeModal('registrationModal');
+}
+
+
+function showAuthenticatedContent() {
+    if (isLoggedIn) {
+        displayBooks();
+        displayAuthors();
+        document.getElementById('bookSection').style.display = 'block';
+        document.getElementById('authorSection').style.display = 'block';
+    }
+}
+
+function hideAuthenticatedContent() {
+    document.getElementById('bookSection').style.display = 'none';
+    document.getElementById('authorSection').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupModalToggles();
+    setupFormSubmissions();
+    updateLoginButton();
+});
+
 
 function openModal(modalId) {
     document.getElementById(modalId).style.display = 'block';
@@ -62,6 +174,7 @@ function closeModal(modalId) {
 }
 
 function displayBooks() {
+    if (!isLoggedIn) return;
     const booksDiv = document.getElementById('books');
     booksDiv.innerHTML = '';
     books.forEach(book => {
@@ -79,8 +192,8 @@ function displayBooks() {
     });
 }
 
-
 function displayAuthors() {
+    if (!isLoggedIn) return;
     const authorsDiv = document.getElementById('authors');
     authorsDiv.innerHTML = '';
     authors.forEach(author => {
@@ -96,18 +209,112 @@ function displayAuthors() {
     });
 }
 
+function openBookModal(bookId) {
+    // Reset form values
+    document.getElementById('bookForm').reset();
+    const bookIdInput = document.getElementById('bookId');
+    const bookTitleInput = document.getElementById('bookTitle');
+    const bookAuthorInput = document.getElementById('bookAuthor');
+    const bookYearInput = document.getElementById('bookYear');
+    const bookGenreInput = document.getElementById('bookGenre');
+
+    if (bookId !== null) {
+        const book = books.find(b => b.id === bookId);
+        bookIdInput.value = book.id;
+        bookTitleInput.value = book.title;
+        bookAuthorInput.value = book.author;
+        bookYearInput.value = book.year;
+        bookGenreInput.value = book.genre;
+    } else {
+        bookIdInput.value = '';
+    }
+
+    openModal('bookModal');
+}
+
+function openAuthorModal(authorId) {
+    // Reset form values
+    document.getElementById('authorForm').reset();
+    const authorIdInput = document.getElementById('authorId');
+    const authorNameInput = document.getElementById('authorName');
+    const authorBiographyInput = document.getElementById('authorBiography');
+
+    if (authorId !== null) {
+        const author = authors.find(a => a.id === authorId);
+        authorIdInput.value = author.id;
+        authorNameInput.value = author.name;
+        authorBiographyInput.value = author.biography;
+    } else {
+        authorIdInput.value = '';
+    }
+
+    openModal('authorModal');
+}
+
+// Add event listeners for form submissions
+document.getElementById('bookForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const bookId = document.getElementById('bookId').value;
+    const bookTitle = document.getElementById('bookTitle').value;
+    const bookAuthor = document.getElementById('bookAuthor').value;
+    const bookYear = document.getElementById('bookYear').value;
+    const bookGenre = document.getElementById('bookGenre').value;
+
+    if (bookId) {
+        // Edit existing book
+        const bookIndex = books.findIndex(b => b.id === parseInt(bookId));
+        books[bookIndex] = { id: parseInt(bookId), title: bookTitle, author: bookAuthor, year: parseInt(bookYear), genre: bookGenre };
+    } else {
+        // Add new book
+        const newBook = {
+            id: Math.max(...books.map(b => b.id)) + 1,
+            title: bookTitle,
+            author: bookAuthor,
+            year: parseInt(bookYear),
+            genre: bookGenre
+        };
+        books.push(newBook);
+    }
+
+    closeModal('bookModal');
+    displayBooks();
+});
+
+document.getElementById('authorForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const authorId = document.getElementById('authorId').value;
+    const authorName = document.getElementById('authorName').value;
+    const authorBiography = document.getElementById('authorBiography').value;
+
+    if (authorId) {
+        // Edit existing author
+        const authorIndex = authors.findIndex(a => a.id === parseInt(authorId));
+        authors[authorIndex] = { id: parseInt(authorId), name: authorName, biography: authorBiography };
+    } else {
+        // Add new author
+        const newAuthor = {
+            id: Math.max(...authors.map(a => a.id)) + 1,
+            name: authorName,
+            biography: authorBiography
+        };
+        authors.push(newAuthor);
+    }
+
+    closeModal('authorModal');
+    displayAuthors();
+});
 
 function confirmDeleteBook(bookId) {
     document.getElementById('confirmMessage').textContent = `Voulez-vous vraiment supprimer le livre ID ${bookId}?`;
     document.getElementById('confirmBtn').onclick = function() {
         deleteBook(bookId);
-        closeModal('confirmModal');
     };
     openModal('confirmModal');
 }
 
 function deleteBook(bookId) {
     books = books.filter(book => book.id !== bookId);
+    closeModal('confirmModal');
     displayBooks();
 }
 
@@ -115,63 +322,12 @@ function confirmDeleteAuthor(authorId) {
     document.getElementById('confirmMessage').textContent = `Voulez-vous vraiment supprimer l'auteur ID ${authorId}?`;
     document.getElementById('confirmBtn').onclick = function() {
         deleteAuthor(authorId);
-        closeModal('confirmModal');
     };
     openModal('confirmModal');
 }
 
 function deleteAuthor(authorId) {
     authors = authors.filter(author => author.id !== authorId);
+    closeModal('confirmModal');
     displayAuthors();
 }
-
-function openBookModal(bookId) {
-    if (bookId) {
-        // Modification d'un livre existant
-        const book = books.find(book => book.id === bookId);
-        document.getElementById('bookId').value = book.id;
-        document.getElementById('bookTitle').value = book.title;
-        document.getElementById('bookAuthor').value = book.author;
-        document.getElementById('bookYear').value = book.year;
-        document.getElementById('bookGenre').value = bookId ? books.find(book => book.id === bookId).genre : '';
-    } else {
-        // Ajout d'un nouveau livre
-        document.getElementById('bookForm').reset();
-        document.getElementById('bookId').value = '';
-    }
-    openModal('bookModal');
-}
-
-function openAuthorModal(authorId) {
-    if (authorId) {
-        // Modification d'un auteur existant
-        const author = authors.find(author => author.id === authorId);
-        document.getElementById('authorId').value = author.id;
-        document.getElementById('authorName').value = author.name;
-        document.getElementById('authorBiography').value = author.biography;
-    } else {
-        // Ajout d'un nouvel auteur
-        document.getElementById('authorForm').reset();
-        document.getElementById('authorId').value = '';
-    }
-    openModal('authorModal');
-}
-
-
-// Gérer la soumission du formulaire du livre
-document.getElementById('bookForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Logique pour ajouter ou modifier un livre
-    const bookId = document.getElementById('bookId').value;
-    // ... ajouter ou modifier le livre ...
-    closeModal('bookModal');
-});
-
-// Gérer la soumission du formulaire de l'auteur
-document.getElementById('authorForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Logique pour ajouter ou modifier un auteur
-    const authorId = document.getElementById('authorId').value;
-    // ... ajouter ou modifier l'auteur ...
-    closeModal('authorModel');
-});
