@@ -1,4 +1,4 @@
-// Dans un nouveau fichier config/config.js
+// config/config.js
 
 // Obtient la valeur de l'environnement NODE_ENV ou utilise 'development' par défaut
 const env = process.env.NODE_ENV || 'development';

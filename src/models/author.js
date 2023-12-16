@@ -20,8 +20,7 @@ Author.init({
   }
 }, {
   sequelize,            // Instance Sequelize à utiliser
-  modelName: 'Author', // Nom du modèle
-  tableName: 'authors', // Nom de la table (optionnel, précisez si différent)
+  modelName: 'Auteurs', // Nom du modèle
   timestamps: false    // Indique si Sequelize doit gérer createdAt et updatedAt (optionnel)
 });
 

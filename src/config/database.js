@@ -20,8 +20,6 @@ const Author = require('../models/author');
 const Book = require('../models/book');
 const User = require('../models/user');
 
-// Si vous avez des associations entre les modèles, assurez-vous de les configurer après avoir importé les modèles
-// Exemple : setupAssociations(Author, Book, User);
 
 // Exporte l'instance Sequelize configurée pour l'utiliser dans d'autres parties de l'application
 module.exports = sequelize;

@@ -4,13 +4,11 @@ module.exports = (sequelize) => {
   const Book = sequelize.models.Book;
   const User = sequelize.models.User;
 
-  // Définissez les associations entre les modèles
   // Un auteur peut avoir plusieurs livres, donc "Author hasMany Book"
   Author.hasMany(Book, { foreignKey: 'auteurId' });
 
   // Un livre appartient à un auteur, donc "Book belongsTo Author"
   Book.belongsTo(Author, { foreignKey: 'auteurId' });
 
-  // Incluez d'autres associations ici si nécessaire
 
 };

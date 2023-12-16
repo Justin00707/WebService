@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Middleware pour l'authentification par jeton JWT
 exports.authenticate = (req, res, next) => {
@@ -21,3 +22,5 @@ exports.authenticate = (req, res, next) => {
     });
   }
 };
+
+

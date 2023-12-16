@@ -26,9 +26,7 @@ class AuthorController {
 
   static async createAuthor(req, res) {
     try {
-      // Si vous avez un schéma de validation
-      // const { error } = authorValidationSchema.validate(req.body);
-      // if (error) return res.status(400).send(error.details[0].message);
+
 
       // Crée un nouvel auteur en utilisant les données reçues dans la requête
       const author = await Author.create(req.body);
@@ -40,9 +38,7 @@ class AuthorController {
 
   static async updateAuthor(req, res) {
     try {
-      // Si vous avez un schéma de validation
-      // const { error } = authorValidationSchema.validate(req.body);
-      // if (error) return res.status(400).send(error.details[0].message);
+     
 
       // Recherche un auteur par son identifiant
       const author = await Author.findByPk(req.params.id);

@@ -15,7 +15,7 @@ describe('POST /api/books', () => {
   it('creates a new book with valid data', async () => {
     const newBook = {
       titre: 'New Book Title',
-      auteurId: 1, // Ensure this ID exists in your test database
+      auteurId: 1, 
       annee: 2021,
       genre: 'Fiction'
     };
