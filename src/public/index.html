@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Bibliothèque</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Authentication Section -->
+        <section id="auth">
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+                <button type="submit">Connexion</button>
+            </form>
+            <button id="registerBtn">Inscription</button>
+        </section>
+
+        <!-- Registration Model -->
+        <div id="registrationModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="registrationForm">
+                    <input type="text" id="registrationName" placeholder="Nom" required>
+                    <input type="email" id="registrationEmail" placeholder="Email" required>
+                    <input type="password" id="registrationPassword" placeholder="Mot de passe" required>
+                    <input type="password" id="registrationConfirmPassword" placeholder="Confirmer mot de passe" required>
+                    <button type="submit">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for Adding/Editing Book -->
+        <div id="bookModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="bookForm">
+                    <input type="hidden" id="bookId">
+                    <input type="text" id="bookTitle" placeholder="Titre" required>
+                    <input type="text" id="bookAuthor" placeholder="Auteur" required>
+                    <input type="number" id="bookYear" placeholder="Année" required>
+                    <input type="text" id="bookGenre" placeholder="Genre" required>
+                    <button type="submit">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for Adding/Editing Author -->
+        <div id="authorModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="authorForm">
+                    <input type="hidden" id="authorId">
+                    <input type="text" id="authorName" placeholder="Nom" required>
+                    <textarea id="authorBiography" placeholder="Biographie" required></textarea>
+                    <button type="submit">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- CRUD Operations for Books -->
+        <section id="bookSection">
+            <button id="addBookBtn">+ Livre</button>
+            <div id="books"></div>
+        </section>
+
+        <!-- CRUD Operations for Authors -->
+        <section id="authorSection">
+            <button id="addAuthorBtn">+ Auteur</button>
+            <div id="authors"></div>
+        </section>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmModal" class="confirm-modal">
+            <div class="confirm-content">
+                <span class="close">&times;</span>
+                <h2>Confirmation de suppression</h2>
+                <p id="confirmMessage">Voulez-vous vraiment supprimer cet élément?</p>
+                <button id="confirmBtn">Supprimer</button>
+                <button onclick="closeModal('confirmModal')">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

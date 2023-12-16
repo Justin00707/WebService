@@ -1,48 +1,58 @@
-// app.js
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
-// Import configuration options
+// Importez les options de configuration
 const corsOptions = require('./config/corsConfig').options;
 const jwtConfig = require('./config/jwtConfig');
 
-// Routes
+// Importez les routes
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes'); 
 const authorRoutes = require('./routes/authorRoutes');
 
-// Initialize Express App
+// Initialisez l'application Express
 const app = express();
 
-// Apply CORS with the imported options
+// Appliquez CORS avec les options importées
 app.use(cors(corsOptions));
 
-// Body parser middleware to parse JSON bodies
+// Middleware pour l'analyse des corps JSON
 app.use(express.json());
 
-// Use routes
+// Utilisez les routes
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/authors', authorRoutes);
 
-// JWT Verification Middleware (example of usage, modify according to actual needs)
+// Middleware de vérification JWT (exemple d'utilisation, modifiez selon vos besoins réels)
 app.use((req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1];
+    const authHeader = req.headers.authorization;
+    if (!authHeader) throw new Error('Aucun jeton fourni');
+
+    const token = authHeader.split(' ')[1];
+    if (!token) throw new Error('Jeton Bearer mal formé');
+
     req.user = jwt.verify(token, jwtConfig.secret);
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Authentication failed' });
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: 'Jeton expiré' });
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: 'Jeton invalide' });
+    } else {
+      return res.status(401).json({ message: 'L\'authentification a échoué' });
+    }
   }
 });
 
-// Error handling middleware
+// Middleware de gestion des erreurs
 app.use((error, req, res, next) => {
   res.status(error.status || 500).json({
     error: {
       status: error.status || 500,
-      message: error.message || 'Internal Server Error',
+      message: error.message || 'Erreur interne du serveur',
     },
   });
 });

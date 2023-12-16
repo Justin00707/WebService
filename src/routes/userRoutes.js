@@ -1,25 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-// Import your user controller or any middleware if needed
+// Importez votre contrôleur d'utilisateur ou tout middleware si nécessaire
 // const userController = require('../controllers/userController');
 // const authenticate = require('../middleware/authenticate');
 
-// Sample route for creating a new user
+// Exemple de route pour la création d'un nouvel utilisateur
 router.post('/create', (req, res) => {
-    // Handle user creation logic here
-    // You might want to call a function from your userController, for example:
+    // Gérez la logique de création de l'utilisateur ici
+    // Vous voudrez peut-être appeler une fonction depuis votre userController, par exemple :
     // userController.createUser(req, res);
-    res.status(201).send('User created successfully');
+    res.status(201).send('Utilisateur créé avec succès');
 });
 
-// Sample route for retrieving a user's information
+// Exemple de route pour récupérer les informations d'un utilisateur
 router.get('/:userId', (req, res) => {
-    // Handle user retrieval logic here
-    // For example: userController.getUser(req, res);
-    res.status(200).send(`Details for user ${req.params.userId}`);
+    // Gérez la logique de récupération de l'utilisateur ici
+    // Par exemple : userController.getUser(req, res);
+    res.status(200).send(`Détails de l'utilisateur ${req.params.userId}`);
 });
 
-// Add more routes as needed...
+// Ajoutez d'autres routes au besoin...
 
 module.exports = router;

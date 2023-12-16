@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/databaseForTest'); // adjust the path as needed
+const sequelize = require('../config/databaseForTest'); // Ajustez le chemin au besoin
 
 class User extends Model {}
 
@@ -14,14 +14,14 @@ User.init({
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: true // validates email format
+      isEmail: true // Valide le format de l'adresse e-mail
     }
   },
   motDePasse: {
     type: DataTypes.STRING(255),
     allowNull: false,
     validate: {
-      len: [8] // minimum length of 8 characters
+      len: [8] // Longueur minimale de 8 caractères
     }
   },
   role: {
@@ -30,7 +30,7 @@ User.init({
   }
 }, {
   sequelize,
-  modelName: 'Users', // the name of the table
+  modelName: 'Users', // Nom de la table
   hooks: {
     beforeCreate: async (user) => {
       if (user.motDePasse) {

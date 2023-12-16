@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Adjust the path as needed
+const sequelize = require('../config/database'); // Ajustez le chemin au besoin
 
 class Author extends Model {}
 
+// Initialise le modèle "Author" avec ses attributs
 Author.init({
-  // Model attributes are defined here
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,11 +19,10 @@ Author.init({
     allowNull: true
   }
 }, {
-  // Sequelize instance and other model options are defined here
-  sequelize,
-  modelName: 'Author',
-  tableName: 'authors', // Optional: explicitly specify the table name if different
-  timestamps: false    // Optional: set true if you want Sequelize to handle createdAt & updatedAt
+  sequelize,            // Instance Sequelize à utiliser
+  modelName: 'Author', // Nom du modèle
+  tableName: 'authors', // Nom de la table (optionnel, précisez si différent)
+  timestamps: false    // Indique si Sequelize doit gérer createdAt et updatedAt (optionnel)
 });
 
-module.exports = Author;
+module.exports = Author; // Exporte le modèle "Author" pour une utilisation ultérieure

@@ -1,26 +1,26 @@
-# Use an official Node runtime as a parent image
+# Utilisez une image parente officielle de Node.js version 14
 FROM node:14
 
-# Set the working directory in the container to /usr/src/app
+# Définissez le répertoire de travail dans le conteneur sur /usr/src/app
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json first to leverage Docker cache
+# Copiez d'abord package.json et package-lock.json pour tirer parti du cache Docker
 COPY package*.json ./
 
-# Install any needed packages specified in package.json
+# Installez les dépendances spécifiées dans package.json
 RUN npm install
 
-# Copy the rest of your app's source code from your host to your image filesystem.
+# Copiez le reste du code source de votre application depuis votre hôte vers le système de fichiers de l'image
 COPY . .
 
-# If your server.js is in the src folder, you need to change the WORKDIR to /usr/src/app/src
+# Si votre server.js se trouve dans le dossier src, vous devez changer le WORKDIR à /usr/src/app/src
 WORKDIR /usr/src/app/src
 
-# Make port 8080 available to the world outside this container
+# Rendez le port 8080 disponible pour le monde extérieur à ce conteneur
 EXPOSE 8080
 
-# Define environment variable
+# Définissez une variable d'environnement pour indiquer que l'application s'exécute en mode production
 ENV NODE_ENV=production
 
-# Run the app when the container launches
+# Exécutez l'application lorsque le conteneur est lancé
 CMD ["node", "server.js"]
